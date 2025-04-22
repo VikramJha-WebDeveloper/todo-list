@@ -29,8 +29,9 @@ const Register = () => {
     
     const collectData = async(e) => {
       e.preventDefault();
+      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
       try{
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
+        const response = await fetch(`${baseUrl}/register`, {
           method: "POST",
           body: JSON.stringify({fullName, email, password, confirmPassword, isRemembered}),
           headers: {"Content-Type": "application/json"}
@@ -63,7 +64,7 @@ const Register = () => {
         console.log(err);
       };
     };
-
+    
     return(
         <>
           <div className="modal fade" id="registerModal">
@@ -75,31 +76,31 @@ const Register = () => {
       </div>
       <div className="modal-body">
       <form onSubmit={collectData}>
-            <div class="mb-3">
-              <label for="fullName" class="form-label">Full Name</label>
-              <input type="text" class={`form-control ${fullNameError?"is-invalid":""}`} id="fullName" placeholder="Enter your full name" value={fullName} onChange={validateFullName} />
+            <div className="mb-3">
+              <label htmlFor="fullName" className="form-label">Full Name</label>
+              <input type="text" className={`form-control ${fullNameError?"is-invalid":""}`} id="fullName" placeholder="Enter your full name" value={fullName} onChange={validateFullName} />
               <span className="invalid-feedback">{fullNameError}</span>
             </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" class={`form-control ${emailError? "is-invalid":""}`} id="email" placeholder="name@example.com" value={email} onChange={validateEmail}/>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Email address</label>
+              <input type="email" className={`form-control ${emailError? "is-invalid":""}`} id="email" placeholder="name@example.com" value={email} onChange={validateEmail}/>
               <span className="invalid-feedback">{emailError}</span>
             </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class={`form-control ${passwordError? "is-invalid":""}`} id="password" placeholder="Create a password" value={password} onChange={validatePassword}/>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Password</label>
+              <input type="password" className={`form-control ${passwordError? "is-invalid":""}`} id="password" placeholder="Create a password" value={password} onChange={validatePassword}/>
               <span className="invalid-feedback">{passwordError}</span>
             </div>
-            <div class="mb-3">
-              <label for="confirmPassword" class="form-label">Confirm Password</label>
-              <input type="password" class={`form-control ${confirmPasswordError? "is-invalid":""}`} id="confirmPassword" placeholder="Confirm your password" value={confirmPassword} onChange={validateConfirmPassword}/>
+            <div className="mb-3">
+              <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+              <input type="password" className={`form-control ${confirmPasswordError? "is-invalid":""}`} id="confirmPassword" placeholder="Confirm your password" value={confirmPassword} onChange={validateConfirmPassword}/>
               <span className="invalid-feedback">{confirmPasswordError}</span>
             </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="termsCheck" checked={isRemembered} onChange={(e)=>setIsRemembered(isRemembered?false:true)}/>
-              <label class="form-check-label" for="termsCheck">I agree to the terms and conditions</label>
+            <div className="mb-3 form-check">
+              <input type="checkbox" className="form-check-input" id="termsCheck" checked={isRemembered} onChange={(e)=>setIsRemembered(isRemembered?false:true)}/>
+              <label className="form-check-label" htmlFor="termsCheck">I agree to the terms and conditions</label>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Register</button>
+            <button type="submit" className="btn btn-primary w-100">Register</button>
           </form>
       </div>
       <div className="modal-footer">

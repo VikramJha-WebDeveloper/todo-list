@@ -11,7 +11,9 @@ const Login = () => {
   }
   const collectData = async(e) => {
     e.preventDefault();
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+    try{
+      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000"
+    const response = await fetch(`${baseUrl}/login`, {
       method: "POST",
       body: JSON.stringify({email, password, isRemembered}),
       headers: {"Content-Type": "application/json"},      
@@ -23,6 +25,9 @@ const Login = () => {
     }else{
       console.log(result.successMessage);
       toast.success(result.successMessage);
+    }
+    }catch(err){
+      console.log(err);
     }
   };
     return(
@@ -36,19 +41,19 @@ const Login = () => {
       </div>
       <div className="modal-body">
       <form onSubmit={collectData}>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" placeholder="Enter your email" value={email} onChange={validateEmail}/>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Email address</label>
+              <input type="email" className="form-control" id="email" placeholder="Enter your email" value={email} onChange={validateEmail}/>
             </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Enter your password" value={password} onChange={(e)=>setPassword(e.target.value)} />
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Password</label>
+              <input type="password" className="form-control" id="password" placeholder="Enter your password" value={password} onChange={(e)=>setPassword(e.target.value)} />
             </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="rememberMe" checked={isRemembered} onChange={(e)=>setIsRemembered(isRemembered?false:true)}/>
-              <label class="form-check-label" for="rememberMe">Remember me</label>
+            <div className="mb-3 form-check">
+              <input type="checkbox" className="form-check-input" id="rememberMe" checked={isRemembered} onChange={(e)=>setIsRemembered(isRemembered?false:true)}/>
+              <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <button type="submit" className="btn btn-primary w-100">Login</button>
           </form>
       </div>
       <div className="modal-footer d-flex align-items-center justify-content-center">
