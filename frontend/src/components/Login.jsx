@@ -12,7 +12,7 @@ const Login = ({colors}) => {
   const collectData = async(e) => {
     e.preventDefault();
     try{
-      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const baseUrl = import.meta.env.VITE_API_URL;
     const response = await fetch(`${baseUrl}/login`, {
       method: "POST",
       body: JSON.stringify({email, password, isRemembered}),

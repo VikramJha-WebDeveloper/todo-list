@@ -29,7 +29,7 @@ const Register = () => {
     
     const collectData = async(e) => {
       e.preventDefault();
-      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const baseUrl = import.meta.env.VITE_API_URL;
       try{
         const response = await fetch(`${baseUrl}/register`, {
           method: "POST",

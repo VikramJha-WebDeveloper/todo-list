@@ -23,7 +23,7 @@ const NavSection = styled.div`
 
 const Navbar = ({ colors }) => {
   const [userFullName, setUserFullName] = useState("");
-  const baseUrl =  import.meta.env.VITE_API_URL || "http://localhost:8000";
+  const baseUrl =  import.meta.env.VITE_API_URL;
   useEffect(() => {
     const getUserData = async () => {
       const response = await fetch(`${baseUrl}/me`, {
