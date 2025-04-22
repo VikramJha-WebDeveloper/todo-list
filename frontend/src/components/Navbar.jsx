@@ -19,7 +19,7 @@ const NavSection = styled.div`
     left: 0;
   }
   }
-` 
+`;
 
 const Navbar = ({ colors }) => {
   const [userFullName, setUserFullName] = useState("");
