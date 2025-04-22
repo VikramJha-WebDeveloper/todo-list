@@ -112,12 +112,12 @@ app.post("/login", async(req, res) => {
   const { email, password, isRemembered } = req.body;
   if(!email){
     console.log("Please enter email");
-    res.status(400).json({errorMesage: "Please enter email"});
+    res.status(400).json({errorMessage: "Please enter email"});
     return;
   }
   if(!password){
     console.log("Please enter password");
-    res.status(400).json({errorMesage: "Please enter password"});
+    res.status(400).json({errorMessage: "Please enter password"});
     return;
   }
   if(!isRemembered){
