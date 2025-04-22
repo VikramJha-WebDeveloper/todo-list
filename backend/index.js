@@ -139,7 +139,7 @@ app.post("/login", async(req, res) => {
     const token = jwt.sign({user_id: foundUser._id}, secret_key, {expiresIn: "1h"});
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
       maxAge: 3600000,
       sameSite: "strict"
     })
