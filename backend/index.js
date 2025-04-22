@@ -12,6 +12,7 @@ const UserModel = require("./models/UserModel");
 const app = express();
 const port = process.env.PORT || 3000;
 const database_url = process.env.DATABASE_URL;
+const secret_key = process.env.SECRET_KEY;
 
 const connectToDatabase = async () => {
   try {
@@ -25,7 +26,7 @@ connectToDatabase();
 
 app.use(express.json());
 
-const allowedOrigins = ["https://todo-list-frontend-xyfn.onrender.com"];
+const allowedOrigins = ["https://todo-list-frontend-xyfn.onrender.com", "http://localhost:5173"];
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -35,6 +36,7 @@ app.use(
         callback(new Error("Not allowed by cors"));
       }
     },
+    credentials: true,
   })
 );
 app.use(cookieParser());
@@ -134,10 +136,64 @@ app.post("/login", async(req, res) => {
     console.log("Invalid credentials");
     res.status(400).json({errorMessage: "Invalid credentials"});
   }else{
+    const token = jwt.sign({user_id: foundUser._id}, secret_key, {expiresIn: "1h"});
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 3600000,
+      sameSite: "strict"
+    })
+    const {fullName, email} = foundUser;
     console.log("Loginned Successfully");
-    res.status(200).json({successMessage: "Loginned Successfully"});
+    res.status(200).json({successMessage: "Loginned Successfully", fullName, email});
   }
 });
+
+const verifyToken = (req, res, next)=>{
+  const token = req.cookies.token;
+  if(!token){
+    console.log("No token found");
+    return res.status(401).json({errorMesage: "No token found"});
+  };
+
+  try{
+    const decode = jwt.verify(token, secret_key);
+    console.log("decode", decode);
+    req.user = decode;
+    next();
+  }catch(err){
+    console.log("Invalid token");
+    return res.status(401).json({errorMesage: "Invalid token"});
+  }
+};
+
+app.get("/me", verifyToken, async(req,res)=>{
+  try{
+    const user = await UserModel.findById(req.user.user_id);
+    if(!user){
+      console.log("No user found");
+      return res.status(401).json({errorMesage: "No user found"});
+    }
+    res.status(200).json({userFullName: user.fullName, userEmail: user.email});
+  }catch(err){
+    console.log("Something went wrong");
+    return res.status(500).json({errorMesage: "something went wrong"})
+  }
+});
+
+app.post("/logout", (req, res)=>{
+  try{
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict"
+    });
+    console.log("logged out successfully");
+    return res.status(200).json({successMessage: "Logged out successfully"});
+  }catch(err){
+    console.log(err);
+  }
+})
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

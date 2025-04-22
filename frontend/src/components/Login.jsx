@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {toast} from "react-toastify";
 
-const Login = () => {
+const Login = ({colors}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRemembered, setIsRemembered] = useState(false);
@@ -12,11 +12,12 @@ const Login = () => {
   const collectData = async(e) => {
     e.preventDefault();
     try{
-      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000"
+      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
     const response = await fetch(`${baseUrl}/login`, {
       method: "POST",
       body: JSON.stringify({email, password, isRemembered}),
-      headers: {"Content-Type": "application/json"},      
+      headers: {"Content-Type": "application/json"},   
+      credentials: "include"
     });
     const result = await response.json();
     if(result.errorMessage){
@@ -25,6 +26,7 @@ const Login = () => {
     }else{
       console.log(result.successMessage);
       toast.success(result.successMessage);
+      window.location.reload()
     }
     }catch(err){
       console.log(err);
