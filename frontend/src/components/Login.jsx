@@ -11,7 +11,7 @@ const Login = () => {
   }
   const collectData = async(e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:8000/login", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
       method: "POST",
       body: JSON.stringify({email, password, isRemembered}),
       headers: {"Content-Type": "application/json"},      

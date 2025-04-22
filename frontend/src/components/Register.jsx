@@ -30,7 +30,7 @@ const Register = () => {
     const collectData = async(e) => {
       e.preventDefault();
       try{
-        const response = await fetch("http://localhost:8000/register", {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
           method: "POST",
           body: JSON.stringify({fullName, email, password, confirmPassword, isRemembered}),
           headers: {"Content-Type": "application/json"}
