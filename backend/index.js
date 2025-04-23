@@ -41,6 +41,20 @@ app.use(
 );
 app.use(cookieParser());
 
+app.post("/logout", (req, res)=>{
+  try{
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict"
+    });
+    console.log("logged out successfully");
+    return res.status(200).json({successMessage: "Logged out successfully"});
+  }catch(err){
+    console.log(err);
+  }
+})
+
 app.post("/register", async (req, res) => {
   try {
     const { fullName, email, password, confirmPassword, isRemembered } =
@@ -180,20 +194,6 @@ app.get("/me", verifyToken, async(req,res)=>{
     return res.status(500).json({errorMesage: "something went wrong"})
   }
 });
-
-app.post("/logout", (req, res)=>{
-  try{
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: false,
-      sameSite: "strict"
-    });
-    console.log("logged out successfully");
-    return res.status(200).json({successMessage: "Logged out successfully"});
-  }catch(err){
-    console.log(err);
-  }
-})
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
