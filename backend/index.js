@@ -41,20 +41,20 @@ app.use(
 );
 app.use(cookieParser());
 
-// app.post("/logout", (req, res)=>{
+app.post("/logout", (req, res)=>{
   
-//   try{
-//     res.clearCookie("token", {
-//       httpOnly: true,
-//       secure: false,
-//       sameSite: "strict"
-//     });
-//     console.log("logged out successfully");
-//     return res.status(200).json({successMessage: "Logged out successfully"});
-//   }catch(err){
-//     console.log(err);
-//   }
-// })
+  try{
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict"
+    });
+    console.log("logged out successfully");
+    return res.status(200).json({successMessage: "Logged out successfully"});
+  }catch(err){
+    console.log(err);
+  }
+})
 
 app.post("/register", async (req, res) => {
   try {
@@ -156,7 +156,7 @@ app.post("/login", async(req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 3600000,
-      sameSite: "strict"
+      sameSite: "None"
     })
     const {fullName, email} = foundUser;
     console.log("Loginned Successfully");
