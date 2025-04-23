@@ -37,13 +37,13 @@ const Navbar = ({ colors }) => {
     getUserData();
   }, []);
   const logoutUser = async() => {
-    const response = await fetch(`${baseUrl}/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
-    const result = await response.json();
-    console.log(result);
-    window.location.reload();
+    // const response = await fetch(`${baseUrl}/logout`, {
+    //   method: "POST",
+    //   credentials: "include",
+    // });
+    // const result = await response.json();
+    // console.log(result);
+    // window.location.reload();
   }
   return (
     <NavSection>
