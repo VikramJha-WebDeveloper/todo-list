@@ -26,7 +26,7 @@ const Login = ({colors}) => {
     }else{
       console.log(result.successMessage);
       toast.success(result.successMessage);
-      window.location.reload()
+      // window.location.reload()
     }
     }catch(err){
       console.log(err);
