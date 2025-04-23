@@ -41,19 +41,20 @@ app.use(
 );
 app.use(cookieParser());
 
-app.post("/logout", (req, res)=>{
-  try{
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: false,
-      sameSite: "strict"
-    });
-    console.log("logged out successfully");
-    return res.status(200).json({successMessage: "Logged out successfully"});
-  }catch(err){
-    console.log(err);
-  }
-})
+// app.post("/logout", (req, res)=>{
+  
+//   try{
+//     res.clearCookie("token", {
+//       httpOnly: true,
+//       secure: false,
+//       sameSite: "strict"
+//     });
+//     console.log("logged out successfully");
+//     return res.status(200).json({successMessage: "Logged out successfully"});
+//   }catch(err){
+//     console.log(err);
+//   }
+// })
 
 app.post("/register", async (req, res) => {
   try {
